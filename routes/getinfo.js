@@ -32,7 +32,18 @@ router.post('/',function(req, res, next){
     })
     connection.end();
 })
-
+router.post('/haveBack',function(req,res,next){
+    var connection = mysql.createConnection({
+        host: config.DataBaseUrl,
+        user: config.DataBaseUser,
+        password: config.DataBasePassword,
+        database: "youwant"
+    })
+    connection.connect()
+    connection.query('',function(err,result){
+        
+    })
+})
 
 
 module.exports = router
