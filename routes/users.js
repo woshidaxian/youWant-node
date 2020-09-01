@@ -7,7 +7,7 @@ const config = require('../settings.js')
 router.get('/', function (req, res, next) {
   res.send('respond with a resource');
 });
-router.get('/userInfo', function (req, res, next) {
+router.post('/userInfo', function (req, res, next) {
   var connection = mysql.createConnection({
     host: config.DataBaseUrl,
     user: config.DataBaseUser,
@@ -15,11 +15,11 @@ router.get('/userInfo', function (req, res, next) {
     database: "youwant"
   })
   connection.connect()
-  connection.query('select * from total',function(err,result){
+  connection.query('select * from user where stuID="'+ req.body.stuID +'"',function(err,result){
     if(err){
       console.log(err);
     }else{
-      res.send(result)
+      res.send(JSON.parse(JSON.stringify(result)))
     }
   })
   connection.end()
