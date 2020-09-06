@@ -22,6 +22,7 @@ router.post('/',function(req, res, next){
     connection.query('select * from total where id="'+ req.body.id +'"',function(err,result){
         if(!err){
             data.data.itemInfo = JSON.parse(JSON.stringify(result));
+            console.log(result);
         }
     })
     connection.query('select * from user where stuID="'+ req.body.stuID +'"',function(err,result){
@@ -40,9 +41,15 @@ router.post('/haveBack',function(req,res,next){
         database: "youwant"
     })
     connection.connect()
-    connection.query('',function(err,result){
-        
+    connection.query('update total set date2="'+ req.body.date2 +'",isOver=1 where id="'+ req.body.id +'"',function(err,result){
+        if(err){
+            console.log(err);
+        }else{
+            // console.log(result);
+            res.send('1')
+        }
     })
+    connection.end()
 })
 
 

@@ -32,11 +32,26 @@ router.get('/list',function(req,res,next){
     database: "youwant"
   })
   connection.connect()
-  if(req.params.type==1){}else if(req.params.type==0){}else{res.send('404')}
-  connection.query('select * from total where stuID="'+ req.params.stuID +'"',function(err,result){
-
+  connection.query('select * from total where stuID="'+ req.query.stuID +'"',function(err,result){
+    res.send(JSON.parse(JSON.stringify(result)))
   })
+  connection.end()
 })
+
+router.get('/listN',function(req,res,next){
+  var connection = mysql.createConnection({
+    host: config.DataBaseUrl,
+    user: config.DataBaseUser,
+    password: config.DataBasePassword,
+    database: "youwant"
+  })
+  connection.connect()
+  connection.query('select * from total where stuID="'+ req.query.stuID +'" and isOver=0',function(err,result){
+    res.send(JSON.parse(JSON.stringify(result)))
+  })
+  connection.end()
+})
+
 router.get('/yubiao',function (req,res,next){
   res.send('余镳儿子');
 })
